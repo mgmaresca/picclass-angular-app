@@ -1,0 +1,5 @@
+---
+applications:
+- name: picclassappclient
+  memory: 512M
+  buildpack: sdk-for-nodejs
