@@ -37,21 +37,6 @@
   
   
   <link rel="stylesheet" href="../stylesheets/login_style.css">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <meta name="google-signin-client_id" content="100028386845-r7jqvmfpnc3m2rurn6664eoieardnv31.apps.googleusercontent.com">
-
-  <script>
-function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  var id_token = googleUser.getAuthResponse().id_token;
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.s
-
-}
-  </script>
-
   
   </head>
 
@@ -63,7 +48,6 @@ function onSignIn(googleUser) {
   <img class="login-logo" src="../images/PicClass.png"></img>
   
   <form class="login-form">
-  <div class="g-signin2" data-onsuccess="onSignIn" ></div>
   <button href="/auth/google">Login with Google</button>
   </form>
   </div>
