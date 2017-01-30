@@ -28,17 +28,13 @@ picclassApp.config(function(LoopBackResourceProvider) {
       templateUrl: '/html/all.html',
        controller: 'homeController'
     })
-// 	.when('/user/album/:id', {
-//       templateUrl: '/html/all.html',
-//       controller: 'albumController'
-//     })
 // 	.when('/html/album/:id/photo/:id', {
 //       templateUrl: '/html/photo.html',
 //       controller: 'photoController'
 //     })
-     .otherwise({
-       redirectTo: '/html/index.html'
-     });
+     //.otherwise({
+     //  redirectTo: '/html/index.html'
+     //});
  }]);
 
  //Still needs to filter empty albums and only user's albums
