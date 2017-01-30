@@ -1,19 +1,12 @@
+<div>
+      
 <ul class="thumbnails">
- <li><img src="images/gallery/thumb1.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb2.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb3.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb4.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb5.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb6.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb7.jpg" alt="" width="150" height="121" /><</li>
-      <li><img src="images/gallery/thumb8.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb9.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb10.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb11.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb12.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb13.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb14.jpg" alt="" width="150" height="121" /></li>
-      <li><img src="images/gallery/thumb15.jpg" alt="" width="150" height="121"/></li>
-      <li><img src="images/gallery/thumb16.jpg" alt="" width="150" height="121" /></li>
+
+      <li ng-repeat='photo in photos'>
+            <img src="{{photo.url}}" alt="{{photo.name}}" width="150" height="121" />
+      </li>
+
 </ul>
-<div class="navigation"> <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a> </div>
+
+</div>
+

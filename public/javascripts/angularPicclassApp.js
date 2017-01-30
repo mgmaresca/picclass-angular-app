@@ -16,19 +16,20 @@ picclassApp.config(function(LoopBackResourceProvider) {
     LoopBackResourceProvider.setUrlBase(urlBase);
   });
 
-
+ 
  picclassApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
    $locationProvider.html5Mode({enabled: true,requireBase: false });
    $routeProvider
-     .when('/', {
-      redirectTo: '/html/login.html'
+     .when('/user/album/:id', {
+      templateUrl: '/html/all.html',
+      controller: "albumController"
      })
-     .when('/html/home', {
-      templateUrl: '/html/home.html',
+     .when('/user/home', {
+      templateUrl: '/html/all.html',
        controller: 'homeController'
-     })
-// 	.when('/html/album/:id', {
-//       templateUrl: '/html/album.html',
+    })
+// 	.when('/user/album/:id', {
+//       templateUrl: '/html/all.html',
 //       controller: 'albumController'
 //     })
 // 	.when('/html/album/:id/photo/:id', {
@@ -40,10 +41,47 @@ picclassApp.config(function(LoopBackResourceProvider) {
      });
  }]);
 
+ //Still needs to filter empty albums and only user's albums
+ picclassApp.controller('MainCtrl', ['$scope', 'Album',
+  function MainCtrl($scope, Album) {
+    $scope.albums = [];
+    Album.find(function(data){
+      $scope.albums = data;   
+    });
+    
+}]);
+
+  //Still needs to filter empty albums and only user's albums
+ picclassApp.controller('albumController', ['$scope', 'Photo', '$routeParams',
+  function albumController($scope, Photo, $routeParams) {
+    $scope.photos = [];
+    console.log("routerParam: " + $routeParams.id)
+    Photo.find({filter:{where:{albumId: $routeParams.id}}},
+      function(data){
+      $scope.photos = data;
+    });
+    
+}]);
+
+  //Still needs to filter empty albums and only user's albums
+ picclassApp.controller('homeController', ['$scope', 'Photo',
+  function homeController($scope, Photo) {
+    $scope.photos = [];
+    Photo.find(function(data){
+      $scope.photos = data;
+    });
+    
+}]);
+
+
+
+
 // // Define the `homeController` controller on the `picclassApp` module
 // picclassApp.controller('homeController', ['$scope','Photo', function angularNotesClientViewController($scope, Photo) {
-//   $scope.photos = [];
-//   Photo.find(function(data){$scope.photos = data;});
+//   $scope.albums = [];
+//   Album.find(function(data){
+
+ // $scope.photos = data;});
  
 // }]);
 
@@ -86,3 +124,5 @@ picclassApp.config(function(LoopBackResourceProvider) {
 // 	  });
 //   }
 // }]);
+
+
