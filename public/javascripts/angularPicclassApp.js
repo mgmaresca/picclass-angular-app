@@ -12,7 +12,7 @@ picclassApp.config(function(LoopBackResourceProvider) {
 
     // Now is just working locally
     // URL where to access the LoopBack REST API server
-    	var urlBase = 'https://localhost:4002/api';
+    	var urlBase = 'https://api.eu.apiconnect.ibmcloud.com/dsftc-dev/sb/api/';
     LoopBackResourceProvider.setUrlBase(urlBase);
   });
 
