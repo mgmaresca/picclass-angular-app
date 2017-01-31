@@ -4,14 +4,23 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cloudinary = require('cloudinary');
 
 var app = express();
 
 
 // CHANGED PORT FOR LOCAL TESTING. REMEMBER TO CHANGE IT TO RUN THE APPLICATION IN BLUEMIX
-var port = process.env.PORT || 1337;
-//var port = process.env.PORT || 3001;
+//var port = process.env.PORT || 1337;
+var port = process.env.PORT || 3001;
 app.set('port', port);  
+
+app.set('view engine', 'html');
+
+cloudinary.config({ 
+  cloud_name: 'dz8rfvtt1', 
+  api_key: '961236131622366', 
+  api_secret: 'MlYr1mnNNbEhSMtC1I08N0Z_VFk' 
+});
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -21,12 +30,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
  app.get('/', function(req, res, next) {
      res.redirect('/html/login.html');
  });
 
 app.get('/user/*', function(req, res, next) {
     res.redirect('/html/index.html');
+});
+
+app.post('/pictures/upload', function(req, res, next) {
+
+  console.log("respuesta cazada por servidor" + req);
+
+  cloudinary.uploader.upload(req.files.file.path, function(result) { 
+  console.log(result); 
+   
+}, { upload_preset: "aygn5ffu" });
+
+  res.redirect('/html/index.html');
+   
 });
 
 // catch 404 and forward to error handler

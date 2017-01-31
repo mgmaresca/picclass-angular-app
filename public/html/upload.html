@@ -1,18 +1,16 @@
-<div >
-<h1> Upload photo </h1>
-<form ng-submit="submitPhoto(newPhoto)" >
-<table >
-<tr>
-<th><label for="Name">Name</label></th>
-<th><label for="content">Select picture</label></th>
-</tr>
-<tr>
-<td><input type="text" name="id" ng-model="newPhoto.name"></td>
-<td>
-<input type="image" name="image" ng-model="newNote.content"></textarea>
-</td>
-</tr>
-</table>
-  <input class="btn btn-primary" type="submit" id="submit" value="Submit" />
-</form>
-</div>
+<h4>Upload on file select</h4>
+
+<button ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"> Select Files</button>
+  <br><br>
+  Files:
+  <ul>
+    <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+      <span class="progress" ng-show="f.progress >= 0">
+        <div style="width:{{f.progress}}%"  
+            ng-bind="f.progress + '%'"></div>
+      </span>
+    </li>
+    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+    </li> 
+  </ul>
+  {{errorMsg}}

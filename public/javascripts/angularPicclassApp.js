@@ -1,7 +1,7 @@
 
 
 // Define the `picclassApp` module
-var picclassApp = angular.module('picclassApp', ['ngRoute', 'ngResource','picclassClient']);
+var picclassApp = angular.module('picclassApp', ['ngRoute', 'ngResource', 'ngFileUpload', 'picclassClient']);
 
 
 picclassApp.config(function(LoopBackResourceProvider) {
@@ -11,8 +11,10 @@ picclassApp.config(function(LoopBackResourceProvider) {
 
 
     // Now is just working locally
+     var urlBase = 'https://localhost:4002/api';
+
     // URL where to access the LoopBack REST API server
-    	var urlBase = 'https://api.eu.apiconnect.ibmcloud.com/dsftc-dev/sb/api/';
+    //	var urlBase = 'https://api.eu.apiconnect.ibmcloud.com/dsftc-dev/sb/api';
     LoopBackResourceProvider.setUrlBase(urlBase);
   });
 
@@ -20,7 +22,7 @@ picclassApp.config(function(LoopBackResourceProvider) {
  picclassApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
    $locationProvider.html5Mode({enabled: true,requireBase: false });
    $routeProvider
-     .when('/user/album/:id', {
+     .when('/user/album/:album_id', {
       templateUrl: '/html/all.html',
       controller: "albumController"
      })
@@ -28,10 +30,10 @@ picclassApp.config(function(LoopBackResourceProvider) {
       templateUrl: '/html/all.html',
        controller: 'homeController'
     })
-// 	.when('/html/album/:id/photo/:id', {
-//       templateUrl: '/html/photo.html',
-//       controller: 'photoController'
-//     })
+  	.when('/user/upload', {
+       templateUrl: '/html/upload.html',
+       controller: 'uploadController'
+     })
      //.otherwise({
      //  redirectTo: '/html/index.html'
      //});
@@ -51,8 +53,8 @@ picclassApp.config(function(LoopBackResourceProvider) {
  picclassApp.controller('albumController', ['$scope', 'Photo', '$routeParams',
   function albumController($scope, Photo, $routeParams) {
     $scope.photos = [];
-    console.log("routerParam: " + $routeParams.id)
-    Photo.find({filter:{where:{albumId: $routeParams.id}}},
+    console.log("routerParam: " + $routeParams.album_id)
+    Photo.find({filter:{where:{albumId: $routeParams.album_id}}},
       function(data){
       $scope.photos = data;
     });
@@ -89,16 +91,54 @@ picclassApp.config(function(LoopBackResourceProvider) {
  
 // }]);
 
-// // Define the `angularNotesClientCreateController` controller on the `picclassApp` module
-// picclassApp.controller('angularNotesClientCreateController', ['$scope','Note','$location',function angularNotesClientCreateController($scope, Note,$location) {
-//   $scope.note={ };
-//   $scope.submitNote=function(data){
-// 	$scope.note=data;
-// 	Note.create($scope.note,function(data){
-// 	  $location.path('/html/view');
-//   });
-//   };
-// }]);
+ // Define the `updateController` controller on the `picclassApp` module
+
+
+ picclassApp.controller('uploadController', ['$scope', 'Upload', '$timeout', function uploadController($scope, Upload, $timeout) {
+    $scope.uploadFiles = function(files, errFiles) {
+        $scope.files = files;
+        $scope.errFiles = errFiles;
+        angular.forEach(files, function(file) {
+            file.upload = Upload.upload({
+                url: '/pictures/upload',
+                method: "POST",
+                data: {file: file}
+            });
+
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                });
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                         evt.loaded / evt.total));
+            });
+        });
+    }
+}]);
+
+
+ // picclassApp.controller('uploadController', ['$scope','Photo','$location', '$routeParams', function uploadController($scope, Photo, $location, $routeParams) {
+ //   $scope.photo={ };
+ //   $scope.submitPhoto=function(data){
+ // 	$scope.photo.name=data.name;
+ //  $scope.photo.tag=data.tag;
+ //  $scope.photo.url=data.url;
+ //  $scope.photo.created = Date.now(); 
+ //  $scope.photo._attachments={
+ //    "picture": {
+ //      "content_type":"image/jpeg",
+ //      "data": data.encoded
+ //    }
+ //  };
+ // 	Photo.create($scope.photo,function(){
+ // 	  $location.path('/user/home');
+ //   });
+ //   };
+ // }]);
 
 // // Define the `angularNotesClientDeleteController` controller on the `picclassApp` module
 // picclassApp.controller('angularNotesClientDeleteController', ['$scope','Note','$routeParams','$location', function angularNotesClientDeleteController($scope, Note,$routeParams,$location) {
