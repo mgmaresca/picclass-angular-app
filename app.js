@@ -9,8 +9,8 @@ var app = express();
 
 
 // CHANGED PORT FOR LOCAL TESTING. REMEMBER TO CHANGE IT TO RUN THE APPLICATION IN BLUEMIX
-var port = process.env.PORT || 1337;
-//var port = process.env.PORT || 3001;
+//var port = process.env.PORT || 1337;
+var port = process.env.PORT || 3001;
 app.set('port', port);  
 
 // uncomment after placing your favicon in /public
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
- app.get('*', function(req, res, next) {
+ app.get('/', function(req, res, next) {
      res.redirect('/html/login.html');
  });
 
