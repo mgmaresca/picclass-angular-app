@@ -10,8 +10,8 @@ var app = express();
 
 
 // CHANGED PORT FOR LOCAL TESTING. REMEMBER TO CHANGE IT TO RUN THE APPLICATION IN BLUEMIX
-//var port = process.env.PORT || 1337;
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 1337;
+//var port = process.env.PORT || 3001;
 app.set('port', port);  
 
 cloudinary.config({ 

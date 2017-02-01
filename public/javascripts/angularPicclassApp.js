@@ -11,10 +11,10 @@ picclassApp.config(function(LoopBackResourceProvider) {
 
 
     // Now is just working locally
-     var urlBase = 'https://localhost:4002/api';
+    // var urlBase = 'https://localhost:4002/api';
 
     // URL where to access the LoopBack REST API server
-    //	var urlBase = 'https://api.eu.apiconnect.ibmcloud.com/dsftc-dev/sb/api';
+    	var urlBase = 'https://api.eu.apiconnect.ibmcloud.com/dsftc-dev/sb/api';
     LoopBackResourceProvider.setUrlBase(urlBase);
   });
 
@@ -88,7 +88,7 @@ picclassApp.config(['$qProvider', function ($qProvider) {
             console.log("File: " + JSON.stringify(file));
 
             file.upload = Upload.upload({
-                url: 'http://localhost:4001/pictures/upload',
+                url: 'http://picclass-backend.eu-gb.mybluemix.net/pictures/upload',
                 data: {file: file}
             });
 
