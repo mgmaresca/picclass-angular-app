@@ -88,7 +88,7 @@ picclassApp.config(['$qProvider', function ($qProvider) {
             console.log("File: " + JSON.stringify(file));
 
             file.upload = Upload.upload({
-                url: 'http://picclass-backend.eu-gb.mybluemix.net/pictures/upload',
+                url: 'https://picclass-backend.eu-gb.mybluemix.net/pictures/upload',
                 data: {file: file}
             });
 
