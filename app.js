@@ -30,11 +30,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.set('view engine', 'html');
 
  app.get('/', function(req, res, next) {
      res.redirect('/html/login.html');
  });
+
+ app.get('/user/:userid/', function(req, res, next) {
+
+    var userId = req.params.userid;
+    res.redirect('/html/index.html', {user: userId});
+
+});
 
 app.get('/user/*', function(req, res, next) {
     res.redirect('/html/index.html');
@@ -42,14 +49,15 @@ app.get('/user/*', function(req, res, next) {
 
 app.post('/pictures/upload', function(req, res, next) {
 
-  console.log("respuesta cazada por servidor" + req);
+  console.log("respuesta cazada por servidor " + JSON.stringfy(req.body));
 
-  cloudinary.uploader.upload(req.files.file.path, function(result) { 
-  console.log(result); 
-   
-}, { upload_preset: "aygn5ffu" });
+  //cloudinary.uploader.upload(req.files.file.path, function(result) {console.log(result);});
 
-  res.redirect('/html/index.html');
+  //, { upload_preset: "aygn5ffu" });
+
+  res.send(200);
+  //res.redirect('/html/index.html');
+
    
 });
 
@@ -66,9 +74,9 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+//  // render the error page
+//  res.status(err.status || 500);
+//  res.render('error');
 });
 
 app.listen(app.get('port'));

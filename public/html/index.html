@@ -31,13 +31,13 @@
 <link rel="stylesheet" type="text/css" href="../stylesheets/prettyPhoto.css" media="screen" />
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="../javascripts/ng-file-upload-shim.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+  <script src="../javascripts/ng-file-upload.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-resource.min.js"></script>
-  <script src="../javascripts/ng-file-upload-shim.min.js"></script>
-  <script src="../javascripts/ng-file-upload.min.js"></script>
-  <script src="../javascripts/ng-file-upload-all.min.js"></script>
-  <script src="../javascripts/FileAPI.min.js"></script>
+  
+
 
 
   <script src="../javascripts/picclassClient.js"></script>
@@ -51,6 +51,10 @@
         console.log('User signed out.');
     });
   }
+  </script>
+
+  <script>
+           var user = {{{user}}};
   </script>
 
 </head>
