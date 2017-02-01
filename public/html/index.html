@@ -44,36 +44,23 @@
   <script src="../javascripts/angularPicclassApp.js"></script>
 
 
-  <script>
-    function signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
-    });
-  }
-  </script>
-
-  <script>
-           var user = {{{user}}};
-  </script>
-
 </head>
 
 <body>
 <div id="wrapper" ng-controller="MainCtrl as main">
   <div id="wrapper-top"> </div>
   <div id="left">
-    <h1 class="logo"><a href="/user/home">PicClass</a></h1>
+    <h1 class="logo"><a href="/user/{{userid}}/home">PicClass</a></h1>
     <ul class="menu">
-      <li><a href="/user/home">Home</a></li>
-      <li> <a href="/user/upload">Upload pictures</a></li>
+      <li><a href="/user/{{userid}}/home">Home</a></li>
+      <li> <a href="/user/{{userid}}/upload">Upload pictures</a></li>
       <li> <a class="opened" href="#">Your albums</a>
         <ul class="sub-menu">
           <li ng-repeat="album in albums">
-            <a class="active" href="/user/album/{{album.id}}">{{album.title}}</a>
+            <a class="active" href="/user/{{album.userId}}/album/{{album.id}}">{{album.title}}</a>
           </li>
         </li>
-      <li><a href="#" onclick="signOut();">Sign out</a></li>
+      <li><a href="http://localhost:4001/auth/logout" ">Sign out</a></li>
 
     </ul>
   </div>
@@ -89,6 +76,8 @@
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://cloud.github.com/downloads/malsup/cycle/jquery.cycle.all.latest.js"></script>
+
+
 
 </body>
 </html>

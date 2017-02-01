@@ -351,3 +351,46 @@ a:hover {
 	color: #6a6a6a;
 	line-height: 15px;
 }
+
+.upload-title{
+
+    font-size: 30px;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+
+.upload-text{
+
+	padding-top: 30px;
+    font-size: 15px;
+    text-align: center;
+
+}
+
+.upload-button{
+
+
+    background: #B3B3B3;
+    width: 40%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 213px;
+
+}
+
+.upload-button:hover{
+  background: #ef3b3a;
+}
+
+.upload-img{
+
+	width: 70%;
+    margin-left: 100px;
+    margin-top: 20px;
+
+}

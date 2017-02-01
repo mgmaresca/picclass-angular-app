@@ -1,16 +1,19 @@
-<h4>Upload on file select</h4>
+<div>
 
-<button ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"> Select Files</button>
+<h4 class="upload-title">Upload your pictures to PicClass!</h4>
+
+<button class="upload-button" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"> Select Files</button>
   <br><br>
-  Files:
   <ul>
-    <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
-      <span class="progress" ng-show="f.progress >= 0">
-        <div style="width:{{f.progress}}%"  
-            ng-bind="f.progress + '%'"></div>
-      </span>
+    <li ng-repeat="f in files">
+      <p class="upload-text">Your picture {{f.name}} has been uploaded to PicClass successfully to the album {{f.album}}!</p>
+      <img class="upload-img" src="{{f.url}}" alt="f.name">
+
     </li>
-    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+    <li ng-repeat="f in errFiles" style="font:smaller" style="display:none;">
+      {{f.name}} {{f.$error}} {{f.$errorParam}}
     </li> 
   </ul>
-  {{errorMsg}}
+ <p style="display:none;">{{errorMsg}}</p> 
+
+</div>

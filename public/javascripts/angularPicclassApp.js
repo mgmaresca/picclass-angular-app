@@ -26,15 +26,15 @@ picclassApp.config(['$qProvider', function ($qProvider) {
  picclassApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
    $locationProvider.html5Mode({enabled: true,requireBase: false });
    $routeProvider
-     .when('/user/:user_id/album/:album_id', {
+     .when('/user/:userid/album/:album_id', {
       templateUrl: '/html/all.html',
       controller: "albumController"
      })
-     .when('/user/:user_id/home', {
+     .when('/user/:userid/home', {
       templateUrl: '/html/all.html',
        controller: 'homeController'
     })
-  	.when('/user/:user_id/upload', {
+  	.when('/user/:userid/upload', {
        templateUrl: '/html/upload.html',
        controller: 'uploadController'
      })
@@ -44,11 +44,13 @@ picclassApp.config(['$qProvider', function ($qProvider) {
  }]);
 
  //Still needs to filter empty albums and only user's albums
- picclassApp.controller('MainCtrl', ['$scope', 'Album',
-  function MainCtrl($scope, Album) {
-    console.log("We got the user! " + $scope.user);
+ picclassApp.controller('MainCtrl', ['$scope', 'Album','$location',
+  function MainCtrl($scope, Album, $location) {
+    console.log("This is our user " + $location.$$search.userid);
+    var userid = $location.$$search.userid;
+    $scope.userid = userid;
     $scope.albums = [];
-    Album.find({filter:{where:{userId: "8864827ae78469ae3498a96a16402d2f"}}}, function(data){
+    Album.find({filter:{where:{userId: userid}}}, function(data){
       $scope.albums = data;   
     });
     
@@ -77,28 +79,6 @@ picclassApp.config(['$qProvider', function ($qProvider) {
 }]);
 
 
-
-
-// // Define the `homeController` controller on the `picclassApp` module
-// picclassApp.controller('homeController', ['$scope','Photo', function angularNotesClientViewController($scope, Photo) {
-//   $scope.albums = [];
-//   Album.find(function(data){
-
- // $scope.photos = data;});
- 
-// }]);
-
-
-// // Define the `uploadController` controller on the `picclassApp` module
-// picclassApp.controller('angularNotesClientViewController', ['$scope','Note', function angularNotesClientViewController($scope, Note) {
-//   $scope.notes = [];
-//   Note.find(function(data){$scope.notes = data;});
- 
-// }]);
-
- // Define the `updateController` controller on the `picclassApp` module
-
-
  picclassApp.controller('uploadController', ['$scope', 'Upload', 'Album', 'Photo', '$timeout', function uploadController($scope, Upload, Album, Photo, $timeout) {
     $scope.uploadFiles = function(files, errFiles) {
         $scope.files = files;
@@ -120,7 +100,9 @@ picclassApp.config(['$qProvider', function ($qProvider) {
                             " " + 
                             response.data.photo_url + 
                             " " + 
-                            response.data.photo_tag);
+                            response.data.photo_tag +
+                            " " +
+                            response.data.album_title);
 
               var new_photo = response.data;
 
@@ -146,21 +128,27 @@ picclassApp.config(['$qProvider', function ($qProvider) {
 
                 }else{
                   // The album doesn't exist yet. We first create it and then upload the pictures to it.
+
                   var new_album = {
                     "category": new_photo.photo_tag,
                     "created": Date.now(),
-                    "title": new_photo.photo_tag,
-                    "userId": "8864827ae78469ae3498a96a16402d2f"
+                    "title": new_photo.album_title,
+                    "userId": $scope.userid
                   }
 
                   Album.create(new_album, function(data){
                     console.log("New album created " + JSON.stringify(data));
+
+
 
                     photo.albumId = data.id;
 
                     Photo.create(photo,function(data){
                       console.log("New photo uploaded, to existing album " + JSON.stringify(data));
                     });
+
+                    $scope.albums.push(data);
+                    $scope.aply();
 
                   });
 
@@ -173,6 +161,8 @@ picclassApp.config(['$qProvider', function ($qProvider) {
                 $timeout(function () {
                   console.log("Executing timeout function");
                     file.result = response.data;
+                    file.album = new_photo.album_title;
+                    file.url = new_photo.photo_url;
                     
                 });
 

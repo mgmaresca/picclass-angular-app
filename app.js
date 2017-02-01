@@ -14,8 +14,6 @@ var app = express();
 var port = process.env.PORT || 3001;
 app.set('port', port);  
 
-app.set('view engine', 'html');
-
 cloudinary.config({ 
   cloud_name: 'dz8rfvtt1', 
   api_key: '961236131622366', 
@@ -38,8 +36,8 @@ app.set('view engine', 'html');
 
  app.get('/user/:userid/', function(req, res, next) {
 
-    var userId = req.params.userid;
-    res.redirect('/html/index.html', {user: userId});
+    var userid = req.params.userid;
+    res.redirect('/html/index.html?userid=' + userid);
 
 });
 
@@ -47,19 +45,6 @@ app.get('/user/*', function(req, res, next) {
     res.redirect('/html/index.html');
 });
 
-app.post('/pictures/upload', function(req, res, next) {
-
-  console.log("respuesta cazada por servidor " + JSON.stringfy(req.body));
-
-  //cloudinary.uploader.upload(req.files.file.path, function(result) {console.log(result);});
-
-  //, { upload_preset: "aygn5ffu" });
-
-  res.send(200);
-  //res.redirect('/html/index.html');
-
-   
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
