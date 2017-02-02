@@ -14,7 +14,7 @@ picclassApp.config(function(LoopBackResourceProvider) {
     // var urlBase = 'https://localhost:4002/api';
 
     // URL where to access the LoopBack REST API server
-    	var urlBase = 'https://api.eu.apiconnect.ibmcloud.com/dsftc-dev/sb/api';
+    	var urlBase = 'https://picclass-backend.eu-gb.mybluemix.net/api';
     LoopBackResourceProvider.setUrlBase(urlBase);
   });
 
