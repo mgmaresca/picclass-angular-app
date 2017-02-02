@@ -51,6 +51,7 @@ picclassApp.config(['$qProvider', function ($qProvider) {
     $scope.userid = userid;
     $scope.albums = [];
     Album.find({filter:{where:{userId: userid}}}, function(data){
+      console.log("Albums related to the user: " + JSON.stringify(data));
       $scope.albums = data;   
     });
     
